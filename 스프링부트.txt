@@ -1,0 +1,93 @@
+ㅇ해당 라이브러리의 문서를 gpt에 넣어서 필요한 부분 골라서 공부하기
+
+
+ㅇ스프링부트에는 톰캣이 내장되어있다. main문을 통해 톰캣이 실행된다.
+
+
+ㅇmvc
+model - 인터페이스 역할
+view - html
+controller - 연산
+
+
+ㅇspring mvc
+DispatherServlet 하나로 모든 servlet을 처리한다.
+User(브라우저) → DispatherServlet ↔ HandlerMapping :: 요청에 패핑되는 컨트롤러를 검색 요청, 컨트롤러에 있는 주소 검색
+User(브라우저) → DispatherServlet ↔ Controller :: 비즈니스 로직 수행, 주소 생성 및 파일경로 기입
+User(브라우저) → DispatherServlet ↔ ViewResolver :: 컨트롤러의 처리 결과를 생성할 뷰를 결정, 경로상의 파일 찾기
+DispatherServle → View → User :: 최종결과물 출력
+
+
+ㅇcontroller의 픽스
+컨트롤러의 리턴값에는 파일의 경로를 기입하는데
+프리픽스와 섭픽스가 생략된 형태로 적을 수 있다.
+prefix 프리픽스 :: 경로
+suffix 섭픽스 :: 확장자명
+
+
+ㅇ rest
+서버 자원의 표준화
+설명 - https://hahahoho5915.tistory.com/54
+resource는 동사보다는 명사를, 대문자보다는 소문자를 사용한다. 단 변수명에는 대문자 가능
+resource의 도큐먼트 이름으로는 단수 명사를 사용해야 한다.
+resource의 컬렉션 이름으로는 복수 명사를 사용해야 한다.
+resource의 스토어 이름으로는 복수 명사를 사용해야 한다
+자원에 대한 행위는 HTTP Method(GET, PUT, POST, DELETE 등)로 표현한다.
+
+
+
+ㅇpostman 사용 (중간 테스트)
+postman에서 RestApi 생성 후 Get data의 baseurl을 http://localhost:8080/로 변경
+
+ㅇswagger
+SwaggerConfig클래스 작성 후
+http://localhost:8080/swagger-ui/index.html로 접속
+
+ㅇpostman과 swagger 연동
+스웨거라이브러리에 있는 주소로 들어가면 json파일이 나오고 이걸 포스트맨에 임포트하면 연동,이식할 수 있다.
+swagger는 개인작업, postman은 팀작업에 용이하다.
+
+
+
+ㅇ태그 이름 설정
+@Api(tags = "컨트롤러 이름")
+@ApiOperation(value = "메소드 이름", notes = "메소드 설명")
+@ApiParam(value = "매개변수 이름", required = true) - required는 필수여부
+@ApiModel(description = "DTO 클래스 이름")
+@ApiModelProperty(value = "DTO의 변수 이름, example = "설명", required = true)
+@Schema(description = "이름", example = "설명", required = true) Api 전부 대응가능
+
+
+ㅇ콘솔창에 Bean을 눌러서 흐름도를 시작적으로 볼 수 있다.
+
+
+ㅇIoC 제어반전
+객체를 직접생성하거나 제어하는것이 아니라 외부에서 관리하는 객체를 가져와서 사용하는 것을 말한다.
+스프링 컨테이너에서 빈을 주입받아 객체를 사용한다.
+Bean이란 스프링 컨테이너가 생성하고 관리하는 객체를 말한다.
+스프링이 모든 의존성 객체를 스프링이 실행될 때마다 만들어주고 필요한 곳에 주입시켜주기에
+Bean들은 싱글턴으로 구성되어 있다.
+IoC에서 클래스를 component, 인스턴스를 bean으로 부른다.
+
+
+ㅇ스프링프레임워크의 특징
+객체지향 IoC, DI를 제공하는 프레임워크
+ (스프링 빈 모듈에서 객채를 생성하고 관리하여, 객체를 외부에서 호출한다)
+관점지향 AOP를 제공하는 프레임워크
+ (공통 로직을 외부 클래스로 분리하여 호출한다)
+PSA를 제공하는 프레임워크
+ (특정 기술과 관련된 서비스를 추상화하여 일관된 방식으로 사용할 수 있게한다))
+POJO를 도와주는 툴을 스프링 프레임워크이다
+ (게터세터를 가진 자바 오브젝트로, 객체 관리를 단순하고 가볍한다)
+
+
+@Component
+컴포넌트 어노테이션은 스프링이 어노테이션을 분석하고 자동으로 bean 객체를 생성한다.
+컴포넌트는 명시적 구분을 위해 분리해서 사용한다.
+-@Controller 컨트롤러 클래스
+-@Service 자바로직을 처리하여 가공하는 서비스 클래스
+-@Repository  DB에 접근하는 클래스
+-@Configuration 설정관련 클래스, 메서드가 리턴한 객체도 bean으로 생성된다
+	          4가지 컴포넌트 중에 우선 순위가 제일 높다.
+
+그외 @RestController는 내부의 모든 메소드에 @ResponseBody을 붙여준다. Controller + ResponseBody

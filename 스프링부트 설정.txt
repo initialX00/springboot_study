@@ -1,0 +1,99 @@
+ㅇ인텔리제이 프로젝트생성 - 스프링부트 탭 (또는 https://spring.io/ - spring initializr)
+ - maven - download jdk17 (Amazon Correto), 스프링부트가 17버전부터 적용됨
+ - 버전마다 패치되는게 많아서 공부해야될게 많다. 학원에선 일단 2.6.6버전사용
+ - Developer Tools에서 spring boot devtools, lombok 체크
+   Web에서 spring web 체크 
+   Template Engines에서 thymeleaf 체크 (시큐리티랑 데이터베이스는 나중에)
+
+ㅇ17버전에서는 javax가 전부 jakarta로 넘어갔기에 전부 수동으로 임폴트를 바꿔줘야한다.
+ - pom.xml에서 변경 (2.6.6 / 16)
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.6.6</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.korit</groupId>
+	<artifactId>springboot_study</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>springboot_study</name>
+	<description>springboot_study</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>16</java.version>
+	</properties>
+
+
+ㅇ프로젝트 f4 또는 setting 들어가기
+ - project setting의 project에서 sdk랑 language level 16으로 - apply 이후 modules에서 16되있는지 확인
+ - maven에서 clean과 install 실행
+ - 서버실행 후 8080 들어왔는지 확인, 막줄에 started 뜬 후에 요청 날리기
+
+
+
+ㅇmvn에서 Spring Boot Starter Thymeleaf  (스프링부트는 버전을 자동으로 세팅해주기에 버전을 적을 필요가 없다)
+dependencies에 추가
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+
+ㅇ자동으로 서버갱신 (속도는 수동이 빠르다) -> 롬복 오류나서 체크하지 말기
+build - compiler - build project automatically 체크
+advanced setting - compiler - allow automake 체크 
+
+
+ㅇ스웨거 라이브러리 적용, 포스트맨에서 하던거를 보다 실용적으로 문서화하여 확인가능하다.
+- mvn에서 SpringFox Boot Starter
+  pom.xml에 추가
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+- SwaggerConfig 클래스 적용
+
+- resouce패키지의 application.properties에 
+  spring.mvc.pathmatch.matching-strategy=ant_path_matcher 추가
+
+- http://localhost:8080/swagger-ui/index.html로 접속
+  라이브러리의 주소를 들어가면 json파일이 나오고 이걸 포스트맨에 임포트하여 연동,이식할 수 있다.
+
+
+
+ㅇ롬복 오류 시
+ - 자동갱신 체크해제
+ - pom.xml 수정 (상관없을 수도 있어서 수정 안한 상태로 먼저 해보기)
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+ - maven 리로드 리셋, project close
+ - .idea폴더, target폴더 삭제
+ - 실행 후 project setting에 project가 16버전인지 확인
+ - 롬복 최신버전으로 수정
+   		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.36</version>
+			<scope>provided</scope>
+		</dependency>
+ 
