@@ -9,5 +9,5 @@ public class SpringbootStudyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootStudyApplication.class, args);
 	}
-
+	//스웨거는 http://localhost:8080/swagger-ui/index.html로 접속
 }

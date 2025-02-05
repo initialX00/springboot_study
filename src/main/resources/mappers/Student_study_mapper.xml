@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.springboot_study.mapper.StudentStudyMapper">
+
+    <!--resultMap은 select할 때 사용-->
+    <!--하나의 태그가 하나의 생성자이기에 AllArgsConstructorrk 필요-->
+    <!--매칭된 값을 대입하기 위해 setter가 필요-->
+    <resultMap id="majorResultMap" type="com.korit.springboot_study.entity.study.Major">
+        <!--카멜표기법과 스네이크표기법 매칭시켜주기-->
+        <id property="majorId" column="major_id" />
+        <result property="majorName" column="major_name" />
+    </resultMap>
+
+    <!--인설트와 셀렉트에도 타입(경로)를 적어야되지만 마이바티스에서 알아서 처리해줌-->
+    <select id="selectMajorsAll" resultMap="majorResultMap">
+        select
+        major_id,
+        major_name
+        from
+        major_tb
+    </select>
+
+    <!--자동생성된 키를 자동으로 매핑시켜 set해준다-->
+    <insert id="insertMajor" keyProperty="majorId" useGeneratedKeys="true">
+        insert into major_tb
+        values (default, #{majorName}) <!--#{}가 getter역할-->
+    </insert>
+
+
+
+
+    <resultMap id="instructorResultMap" type="com.korit.springboot_study.entity.study.Instructor">
+        <id property="instructorId" column="instructor_id"/>
+        <result property="instructorName" column="instructor_name"/>
+    </resultMap>
+
+    <select id="selectInstructorAll" resultMap="instructorResultMap">
+        select
+            instructor_id,
+            instructor_name
+        from
+            instructor_tb
+    </select>
+
+    <insert id="insertInstructor" keyProperty="instructorId" useGeneratedKeys="true">
+        insert into instructor_tb
+        values (default, #{instructorName})
+    </insert>
+
+</mapper>

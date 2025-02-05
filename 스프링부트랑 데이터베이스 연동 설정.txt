@@ -1,0 +1,83 @@
+http://localhost:8080/swagger-ui/index.html로 접속
+
+ㅇ mvn에서 MyBatis Spring Boot Starter 2.2.2 버전
+<dependency>
+    <groupId>org.mybatis.spring.boot</groupId>
+    <artifactId>mybatis-spring-boot-starter</artifactId>
+    <version>2.2.2</version>
+</dependency>
+
+
+ㅇ mvn에서 MySQL Connector Java 추가
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+</dependency>
+
+
+
+ㅇ야놀로 파일 변경 (야놀은 들여쓰기가 무조건 스페이스 두번, 아니면 오류 뜸)
+application.properties에
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver 추가
+
+application.properties을 application.yml로 변경
+
+
+ㅇapplication.yml에 코드 변경
+spring.mvc.pathmatch.matching-strategy에 컨트롤 스페이스로 자동 완성
+
+//스프링 세팅, db정보 입력
+spring: 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/study
+    username: root
+    password: 1q2w3e4r!
+
+//mapper의 모든경로 접근
+mybatis:
+  mapper-locations:
+    - /mappers/*.xml   
+
+
+ㅇmybatis 사이트에서 설정 가져오기 - getting started 들어가기
+resource 폴더 >> mappers 폴더 >> Student_study_mapper.xml에 코드 추가
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.springboot_study.mapper.StudentStudyMapper">
+				(com.파일경로(mapper의 파일경로로 변경))
+</mapper>
+
+
+
+
+ㅇ데이터 베이스의 데이터 들고오기
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.springboot_study.mapper.StudentStudyMapper">
+
+    <resultMap id="majorResultMap" type="com.korit.springboot_study.entity.study.Major">
+        <id property="majorId" column="major_id" /> <!--카멜표기법과 스네이크표기법 매칭시켜주기-->
+        <result property="majorName" column="major_name" />
+    </resultMap>
+
+    <select id="selectMajorsAll" resultMap="majorResultMap">
+        select
+            major_id,
+            major_name
+        from
+            major_tb
+    </select>
+</mapper>
+
+
+ㅇmybatis관련 자동완성
+plugins에서 mybatisx 설치
