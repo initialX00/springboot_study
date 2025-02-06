@@ -2,6 +2,7 @@ package com.korit.springboot_study.service;
 
 import com.korit.springboot_study.dto.request.study.ReqAddInstructorDto;
 import com.korit.springboot_study.dto.request.study.ReqAddMajorDto;
+import com.korit.springboot_study.dto.request.study.ReqUpdateMajorDto;
 import com.korit.springboot_study.dto.response.common.NotFoundResponseDto;
 import com.korit.springboot_study.dto.response.common.ResponseDto;
 import com.korit.springboot_study.dto.response.common.SuccessResponseDto;
@@ -45,8 +46,10 @@ public class StudentStudyService {
         );
     }
 
+
     //예외가 터지면 롤백하기, insert 중에 터지는 예외는 어떻게 될지 모르기에 미리 방지한다.
-    @Transactional(rollbackFor = DuplicateKeyException.class)
+    //insert, update, delete는 무조건 롤백걸어주기
+    @Transactional(rollbackFor = DuplicateKeyException.class) //모든 예외를 포함하는 Exception으로 해도됨
     public SuccessResponseDto<Major> addMajor(ReqAddMajorDto reqAddMajorDto) throws DuplicateKeyException {
         return new SuccessResponseDto<>(
                 studentStudyRepository
@@ -62,7 +65,16 @@ public class StudentStudyService {
         return new SuccessResponseDto<>(
                 studentStudyRepository
                         .saveInstructor(new Instructor(0, reqAddInstructorDto.getInstructorName()))
-                        .orElseThrow()
+                        .get()
         );
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public SuccessResponseDto<Major> updateMajors(int majorId, ReqUpdateMajorDto reqUpdateMajorDto) throws NotFoundException {
+        Major updatedMajors = studentStudyRepository
+                .updateMajor(new Major(majorId, reqUpdateMajorDto.getMajorName()))
+                .orElseThrow(() -> new NotFoundException("해당 학과 ID는 존재하지 않습니다"));
+        return new SuccessResponseDto<>(updatedMajors);
     }
 }

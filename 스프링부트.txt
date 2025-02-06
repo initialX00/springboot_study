@@ -91,3 +91,50 @@ POJO를 도와주는 툴을 스프링 프레임워크이다
 	          4가지 컴포넌트 중에 우선 순위가 제일 높다.
 
 그외 @RestController는 내부의 모든 메소드에 @ResponseBody을 붙여준다. Controller + ResponseBody
+
+
+
+
+
+ㅇ유효성 검사
+포스트맨처럼 외부에서 요청을 받아올 경우, 중간 검증을 놓칠 수가 있기에 항상 마지막에도 검증을 해야한다.
+프론트에서 할 수 있는 검사는 프론트에서 최대한 진행한다.
+
+
+ㅇ정규표현식
+문자열에 규칙을 부여하는 언어
+
+
+
+
+ㅇ역할
+Mapper DB데이터를 가져온다(객체와 데이터의 매칭)
+Repository DB데이터와의 상호작용(CRUD)
+Service 레포지토리를 통해 연산처리
+Controller 서비스를 호출하여 요청,응답처리
+DTO 클라이언트와 서버 간에 데이터를 전송하기 위한 객체
+
+
+
+
+ㅇ과제
+1.ReqDTO 유효성 검사하기
+2.전체리스트 불러오기( 검색어 없으면 전체조회, 검색어 있으면 부분조회)
+3.중복 요청 검사
+4.각이름 검색 (컨트롤러에 파라미터로 검색명이 넘어와야한다)
+GET 요청 Controller getBook(@RequestParam(필수x) String bookName)
+5.Xml SQL select의 where like필요함. concat() 함수 필요
+6.POST, UPDATE도 하기
+
+Req Add, Search BookDto
+Book(Entity)
+
+BookController 
+BookService
+Book Repository, Mapper
+
+Xml -> BookResultMap
+
+
+Book,Author,Publisher,Cartegory 4가지 만들기
+

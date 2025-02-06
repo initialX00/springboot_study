@@ -81,3 +81,27 @@ resource 폴더 >> mappers 폴더 >> Student_study_mapper.xml에 코드 추가
 
 ㅇmybatis관련 자동완성
 plugins에서 mybatisx 설치
+
+
+
+
+ㅇ인텔리제이로 데이터베이스 사용하기
+- 우측탭에 동전(데이터베이스아이콘)하거나
+ 야놀 파일에서 데이터베이스아이콘 클릭(야놀로하면 정보 자동기입)
+ 드라이버 다운 + 비밀번호 입력
+
+- 우측탭에 데이터베이스 클릭 후 원하는 테이블 선택 후 상단의 콘솔창 클릭
+ 셀렉트 등으로 테이블을 불러오면 콘솔창에 데이터베이스 자료가 나온다
+
+
+
+ㅇ정규표현식의 유효성 검사에 대한 어노테이션
+Spring Boot Starter Validation 추가
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+@Pattern(regexp= "정규표현식" message = ""설명문") 으로 유효성 검사 조건 작성
+@Valid 로 유효성 검사 실행, 유효성 검사을 할 부분에 달기
+@Min(value = num, message = "")등으로 직접적으로 유효성 검사도 가능
+@Validated 는 직접적인 유효성 검사를 실행하는 클래스에 달기

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        public "-//mybatis.org//DTO Mapper 3.0//EN"
+        "https://mybatis.org//dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.springboot_study.mapper.BookMapper">
+
+    <resultMap id="bookResultMap" type="com.korit.springboot_study.entity.Book">
+        <id property="bookId" column="book_id" />
+        <result property="bookName" column="major_name" />
+    </resultMap>
+    <select id="selectBookAll" resultMap="bookResultMap">
+        select
+            book_id,
+            book_name
+        from
+            book_tb
+    </select>
+    <select id="selectBooks" resultMap="bookResultMap">
+        select
+            book_id,
+            book_name
+        from
+            book_tb
+        where
+            book_name like concat('%', #{bookName}, '%'}
+    </select>
+    <insert id="insertBook" keyProperty="bookId" useGeneratedKeys="true">
+        insert into major_tb
+        values (default, #{bookName})
+    </insert>
+
+</mapper>

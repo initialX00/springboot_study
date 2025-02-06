@@ -16,10 +16,10 @@
     <!--인설트와 셀렉트에도 타입(경로)를 적어야되지만 마이바티스에서 알아서 처리해줌-->
     <select id="selectMajorsAll" resultMap="majorResultMap">
         select
-        major_id,
-        major_name
+            major_id,
+            major_name
         from
-        major_tb
+            major_tb
     </select>
 
     <!--자동생성된 키를 자동으로 매핑시켜 set해준다-->
@@ -27,6 +27,15 @@
         insert into major_tb
         values (default, #{majorName}) <!--#{}가 getter역할-->
     </insert>
+
+    <update id="updateMajorName">
+        update
+            major_tb
+        set
+            major_name = #{majorName}
+        where
+            major_id = #{majorId}
+    </update>
 
 
 
