@@ -138,3 +138,9 @@ Xml -> BookResultMap
 
 Book,Author,Publisher,Cartegory 4가지 만들기
 
+
+
+ㅇ국내 표준화 - 전자정부프레임워크
+
+react 이후 react네이티브(앱&웹 크로스)도 공부해보기
+
