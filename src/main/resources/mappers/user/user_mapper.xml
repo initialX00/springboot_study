@@ -12,12 +12,42 @@
         <result property="password" column="password" />
         <result property="name" column="name" />
         <result property="email" column="email" />
+        <collection property="userRoles" resultMap="userRoleResultMap" />
     </resultMap>
+
+    <resultMap id="userRoleResultMap" type="com.korit.springboot_study.entity.UserRole">
+        <id property="userRoleId" column="user_role_id" />
+        <result property="userId" column="user_id" />
+        <result property="roleId" column="role_id" />
+        <association property="role" resultMap="roleResultMap" />
+    </resultMap>
+
+    <resultMap id="roleResultMap" type="com.korit.springboot_study.entity.Role">
+        <id property="roleId" column="role_id" />
+        <result property="roleName" column="role_name" />
+    </resultMap>
+
 
     <insert id="insert" keyProperty="userId" useGeneratedKeys="true" >
         insert into user_tb
         values(default, #{username}, #{password}, #{name}, #{email})
     </insert>
+
+    <update id="updateUserById">
+        update user_tb
+        set
+        email = #{email}
+        where
+        user_id = #{userId}
+    </update>
+
+    <delete id="deleteById">
+        delete
+        from
+        user_tb
+        where
+        user_id = #{userId}
+    </delete>
 
     <select id="selectByUsername" resultMap="userResultMap">
         select
@@ -31,5 +61,44 @@
         where
         username = #{username}
     </select>
+    <select id="selectById" resultMap="userResultMap">
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.name,
+        ut.email,
 
+        urt.user_role_id,
+        urt.user_id,
+        urt.role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on(urt.user_id = ut.user_id)
+        left outer join role_tb rt on(rt.role_id = urt.role_id)
+        where
+        ut.user_id = #{userId}
+    </select>
+    <select id="selectAll" resultMap="userResultMap" >
+        select
+        ut.user_id,
+        ut.username,
+        ut.password,
+        ut.name,
+        ut.email,
+
+        urt.user_role_id,
+        urt.user_id,
+        urt.role_id,
+
+        rt.role_id,
+        rt.role_name
+        from
+        user_tb ut
+        left outer join user_role_tb urt on(urt.user_id = ut.user_id)
+        left outer join role_tb rt on(rt.role_id = urt.role_id)
+    </select>
 </mapper>
