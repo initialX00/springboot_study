@@ -1,0 +1,9 @@
+2025-02-12 12:33:11.556 [http-nio-8080-exec-1] ERROR com.korit.springboot_study.aspect.PrintParamsAspect - 로그를 출력합니다.
+2025-02-12 12:46:06.393 [http-nio-8080-exec-1] ERROR com.korit.springboot_study.aspect.LoggingAspect - Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.korit.springboot_study.dto.response.common.SuccessResponseDto<com.korit.springboot_study.entity.Book>> com.korit.springboot_study.controller.BookController.addBook(com.korit.springboot_study.dto.request.ReqAddBookDto): [Field error in object 'reqAddBookDto' on field 'isbn': rejected value [D200320910]; codes [ISBN.reqAddBookDto.isbn,ISBN.isbn,ISBN.java.lang.String,ISBN]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [reqAddBookDto.isbn,isbn]; arguments []; default message [isbn],ISBN_13]; default message [올바르지 않은 ISBN입니다]] 
+2025-02-12 14:53:14.087 [http-nio-8080-exec-8] ERROR com.korit.springboot_study.aspect.PrintParamsAspect - 로그를 출력합니다.
+2025-02-12 14:53:42.930 [http-nio-8080-exec-1] ERROR com.korit.springboot_study.aspect.PrintParamsAspect - 로그를 출력합니다.
+2025-02-12 14:54:50.551 [http-nio-8080-exec-1] ERROR com.korit.springboot_study.aspect.PrintParamsAspect - 로그를 출력합니다.
+2025-02-12 15:12:23.746 [http-nio-8080-exec-8] ERROR com.korit.springboot_study.aspect.PrintParamsAspect - 로그를 출력합니다.
+2025-02-12 15:22:39.485 [http-nio-8080-exec-1] ERROR com.korit.springboot_study.aspect.PrintParamsAspect - 로그를 출력합니다.
+2025-02-12 15:22:49.983 [http-nio-8080-exec-4] ERROR com.korit.springboot_study.aspect.PrintParamsAspect - 로그를 출력합니다.
+2025-02-12 15:31:35.022 [http-nio-8080-exec-1] ERROR com.korit.springboot_study.aspect.PrintParamsAspect - 로그를 출력합니다.

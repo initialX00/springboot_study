@@ -97,3 +97,108 @@ advanced setting - compiler - allow automake 체크
 			<scope>provided</scope>
 		</dependency>
  
+
+
+ㅇaop설정
+@Aspect 사용가능
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+
+ㅇlog4j2
+체크하고 싶은 데이터 저장
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+		//구버전 제외하기
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+ㅇlog4j2 추가설정
+ - resources 폴더에 log4j2.xml 만들기
+  log4j2 사이트 - 메뉴얼 - configuration의 xml 내용 입력
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %highlight{%-5level} %logger{36} - %msg%n"/>
+        </Console>
+
+        <RollingFile name="RootFileAppender" fileName="logs/app.log"
+                     filePattern="logs/app-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %highlight{%-5level} %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="ErrorFileAppender" fileName="logs/error.log"
+                     filePattern="logs/error-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %highlight{%-5level} %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+        </RollingFile>
+    </Appenders>
+
+    
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RootFileAppender" />
+        </Root>
+        
+        <Logger name="com.korit.springboot_study" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RootFileAppender" />
+        </Logger>
+
+        <Logger name="com.korit.springboot_study" level="ERROR" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="ErrorFileAppender" />
+        </Logger>
+    </Loggers>
+</Configuration>
+
+ - application.yml 야놀에 추가
+logging:
+  config: classpath:log4j2.xml
+  file:
+    path: logs
+
+
+ - 실행 후 logs 폴더에 파일이 생성되어 로그들이 기록됨
+
+
+
+ㅇsecurity
+cofig 폴더 @EnableWebSecurity 어노테이션을 사용하여 톰캣 접근제한
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+세큐리티관련 오류 시 http - f12 - application - cookies - jsessionid삭제 (이전 데이터 남아있는거 삭제)
+
+
+ ㅁㄹㄷㄴㄱ

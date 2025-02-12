@@ -105,3 +105,4 @@ Spring Boot Starter Validation 추가
 @Valid 로 유효성 검사 실행, 유효성 검사을 할 부분에 달기
 @Min(value = num, message = "")등으로 직접적으로 유효성 검사도 가능
 @Validated 는 직접적인 유효성 검사를 실행하는 클래스에 달기
+
