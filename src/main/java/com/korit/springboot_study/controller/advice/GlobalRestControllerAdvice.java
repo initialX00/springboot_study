@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.security.sasl.AuthenticationException;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,11 @@ public class GlobalRestControllerAdvice {
     @ExceptionHandler(value = NotFoundException.class)
     public ResponseEntity<NotFoundResponseDto<?>> notFound(NotFoundException e) {
         return ResponseEntity.status(404).body(new NotFoundResponseDto<>(e.getMessage()));
+    }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    public ResponseEntity<BadRequsetResponseDto<?>> signinError(AuthenticationException e) {
+        return ResponseEntity.status(403).body(new BadRequsetResponseDto<>(e.getMessage()));
     }
 
     //notFound처럼 사용자 임의 예외가 아니라 데미터베이스에서의 에러이기에
@@ -54,4 +60,5 @@ public class GlobalRestControllerAdvice {
         }
         return ResponseEntity.status(400).body(new BadRequsetResponseDto<>(errorMap));
     }
+
 }

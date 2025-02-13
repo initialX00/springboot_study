@@ -21,4 +21,10 @@ public class User {
     private String email;
 
     List<UserRole> userRoles;
+
+    //bd의 참거짓은 0,1로 이루어져있다.
+    private int isAccountNonExpired;
+    private int isAccountNonLocked;
+    private int isCredentialsNonExpired;
+    private int isEnabled;
 }

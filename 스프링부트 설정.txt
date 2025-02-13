@@ -201,4 +201,23 @@ cofig 폴더 @EnableWebSecurity 어노테이션을 사용하여 톰캣 접근제
 세큐리티관련 오류 시 http - f12 - application - cookies - jsessionid삭제 (이전 데이터 남아있는거 삭제)
 
 
- ㅁㄹㄷㄴㄱ
+
+ㅇJWT
+mvn에서 jjwt 11.5버전
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+
+JWT secret key generator
