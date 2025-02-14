@@ -27,13 +27,15 @@ public class AuthenticationController {
     @PrintParamsAop
     @ApiOperation(value = "회원가입")
     @PostMapping("/api/auth/user/signup")
-    public ResponseEntity<SuccessResponseDto<User>> signup(@Valid @RequestBody ReqSignupDto reqSignupDto) throws MethodArgumentNotValidException {
+    public ResponseEntity<SuccessResponseDto<User>> signup(
+            @Valid @RequestBody ReqSignupDto reqSignupDto) throws MethodArgumentNotValidException {
         return ResponseEntity.ok().body(new SuccessResponseDto<>(authenticationService.signup(reqSignupDto)));
     }
 
     @ApiOperation(value = "로그인")
     @PostMapping("/api/auth/signin")
-    public ResponseEntity<SuccessResponseDto<String>> signin(@Valid @RequestBody ReqSigninDto reqSigninDto) throws MethodArgumentNotValidException {
+    public ResponseEntity<SuccessResponseDto<String>> signin(
+            @Valid @RequestBody ReqSigninDto reqSigninDto) throws MethodArgumentNotValidException {
         return ResponseEntity.ok().body(new SuccessResponseDto<>(authenticationService.signin(reqSigninDto)));
     }
 

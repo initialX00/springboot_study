@@ -3,6 +3,8 @@ package com.korit.springboot_study.config;
 import com.korit.springboot_study.security.exception.CustomAuthenticationEntryPoint;
 import com.korit.springboot_study.security.filter.CustomAuthenticationFilter;
 import com.korit.springboot_study.security.filter.JwtAuthenticationFilter;
+import com.korit.springboot_study.security.oauth2.OAuth2Service;
+import com.korit.springboot_study.security.oauth2.OAuth2SuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //기본세팅은 이미 다 구현되있기에 오버라이드로 필요한것만 수정한다.
     //기본 id는 user, 기본 password는 서버실행 시 콘솔창에 나와있음
+
+    @Autowired
+    private OAuth2SuccessHandler oAuth2SuccessHandler;
+
+    @Autowired
+    private OAuth2Service oAuth2Service;
 
     @Autowired
     private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
@@ -45,6 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling() //예외처리 사용자가 처리(이 경우 예외란 인증 안된 사용자의 접근을 말한다)
                         .authenticationEntryPoint(customAuthenticationEntryPoint); //인증실패에 대한 처리
+
+
+        http.oauth2Login()
+                .successHandler(oAuth2SuccessHandler)
+                        .userInfoEndpoint()
+                                .userService(oAuth2Service);
+
 
         http.authorizeRequests()
                 .antMatchers("/api/auth/**") //경로설정
