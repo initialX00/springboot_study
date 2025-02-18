@@ -30,13 +30,11 @@ public class JwtProvider {
     public String createAccessToken(User user) {
         return Jwts.builder()
                 .claim("userId", user.getUserId())
-                .claim("roles", user.getUserRoles()
-                        .stream()
-                        .map(userRole -> userRole.getRole().getRoleName())
-                        .collect(Collectors.toList()))
+                .claim("roles", user.getUserRoles().stream().map(userRole -> userRole.getRole().getRoleName()).collect(Collectors.toList()))
                 .setExpiration(getExpireDate())
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+
     }
 
     public boolean validateToken(String token) {
@@ -49,15 +47,15 @@ public class JwtProvider {
             JwtParser parser = Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build();
-            claims = parser.parseClaimsJws(removeBearer(token)).getBody();
+            claims = parser.parseClaimsJws(token).getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return claims;
     }
 
-    //Authorization -> AccessToken(Bearer ~.~.~)
-    private String removeBearer(String bearerToken) {
+    // Authorization -> AccessToken(Bearer ?????.?????.?????)
+    public String removeBearer(String bearerToken) {
         String token = null;
         final String BEARER_KEYWORD = "Bearer ";
         if(bearerToken.startsWith(BEARER_KEYWORD)) {
@@ -65,4 +63,5 @@ public class JwtProvider {
         }
         return token;
     }
+
 }
